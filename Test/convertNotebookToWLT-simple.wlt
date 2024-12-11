@@ -20,9 +20,9 @@ VerificationTest[
 ]
 
 VerificationTest[
-	deleteEmptyList[{{{{}}}}]
+	colorHexify[Red]
 	,
-	Sequence[]
+	"#ff0000"
 	,
 	TestID->"2-convertNotebookToWLT-simple.nb"
 ]
