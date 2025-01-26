@@ -113,7 +113,7 @@ postFormat[usageList_List] :=
     usageList//Query[All,<|
         "WL"->
             TemplateObject[
-                {TemplateSlot["Symbol"],"::usage =\n\t",TemplateSlot["Usage"],";"},
+                {TemplateSlot["Symbol"],"::usage =\n    ",TemplateSlot["Usage"],";"},
                 InsertionFunction->ToString,
                 CombinerFunction->StringJoin
             ],
