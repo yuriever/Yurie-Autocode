@@ -183,8 +183,8 @@ cellListToTestString[notebookName_][cellList_List,id_Integer] :=
 
 templateOfTestString[strList_List] :=
     StringRiffle[strList,{
-        "VerificationTest[\n\t",
-        "\n\t,\n\t",
+        "VerificationTest[\n    ",
+        "\n    ,\n    ",
         "\n]"
     }];
 
@@ -220,7 +220,7 @@ boxToString[box_,format_] :=
 
 
 indentNewline[str_String] :=
-    str//StringReplace["\n"->"\n\t"];
+    str//StringReplace["\n"->"\n    "];
 
 indentNewline[missing_Missing] :=
     "Null";
@@ -228,7 +228,7 @@ indentNewline[missing_Missing] :=
 
 indentNewline2[str_String] :=
     If[ StringContainsQ[str,"Null; "],
-        StringSplit[str,"Null; "]//StringReplace[#,StartOfString~~"("~~any__~~"); ":>any]&//StringRiffle[#,"\n\t"]&,
+        StringSplit[str,"Null; "]//StringReplace[#,StartOfString~~"("~~any__~~"); ":>any]&//StringRiffle[#,"\n    "]&,
         (*Else*)
         str
     ];
