@@ -120,7 +120,16 @@ handleUpdatedUsage[False] :=
 handleUpdatedUsage["FindStringJoinThenAddNewline"][usageList_List] :=
     usageList//Query[All,
         If[ StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
-            <|#,"Usage"->ToExpression[#Symbol,StandardForm,Function[Null,MessageName[#,"usage"],{HoldFirst}]]<>"\n"|>,
+            <|#,"Usage"->
+                ToString[
+                    ToExpression[
+                        #Symbol,
+                        InputForm,
+                        Function[Null,MessageName[#,"usage"],{HoldFirst}]
+                    ]<>"\n",
+	                InputForm
+                ]
+            |>,
             (*Else*)
             #
         ]&
