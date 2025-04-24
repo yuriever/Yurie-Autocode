@@ -52,7 +52,8 @@ $usageFileName = <|
 
 exportPublicSymbolUsage//Options = {
     "ExcludedFile":>{$usageFileName},
-    "ExcludedSymbol"->{}
+    "ExcludedSymbol"->{},
+    "UpdatedUsageHandler"->Automatic
 };
 
 
@@ -63,7 +64,11 @@ exportPublicSymbolUsage//Options = {
 exportPublicSymbolUsage[dir_?DirectoryQ,targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
     Module[ {usage},
         usage =
-            getUsageFromDirectory[dir,OptionValue["ExcludedFile"],OptionValue["ExcludedSymbol"]];
+            getUsageFromDirectory[dir,
+                OptionValue["ExcludedFile"],
+                OptionValue["ExcludedSymbol"],
+                OptionValue["UpdatedUsageHandler"]
+            ];
         {
             File@Export[
                 FileNameJoin@{targetDir,$usageFileName["WL"]},
@@ -83,12 +88,12 @@ exportPublicSymbolUsage[dir_?DirectoryQ,targetDir_?DirectoryQ,opts:OptionsPatter
 (*Helper*)
 
 
-getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List] :=
+getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List,updatedUsageHandler_] :=
     fileListFromDirectory[dir,excludedFileList]//
         (*get the list of usages from *.wl files.*)
         Query[All,<|
             "FileName"->#FileName,
-            getUsageFromSingleFile[#File,excludedSymbolList]
+            getUsageFromSingleFile[#File,excludedSymbolList,updatedUsageHandler]
         |>&]//
             (*drop the files without usage.*)
             Select[KeyExistsQ[#,"WL"]&&KeyExistsQ[#,"MD"]&]//
@@ -99,14 +104,30 @@ getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List] :=
                 |>&]//Merge[StringRiffle[#,"\n\n\n"]&];
 
 
-getUsageFromSingleFile[file_File,excludedSymbolList_List] :=
-    file//CodeParse//getUsageListFromAST[excludedSymbolList]//postFormat;
+getUsageFromSingleFile[file_File,excludedSymbolList_List,updatedUsageHandler_] :=
+    file//CodeParse//getUsageListFromAST[excludedSymbolList]//handleUpdatedUsage[updatedUsageHandler]//postFormat;
 
 
 getUsageListFromAST[excludedSymbolList_List][ast_] :=
     ast//DeleteCases[#,_ContextNode,Infinity]&//
         Cases[#,patternOfUsage,Infinity]&//
             Query[Select[!MemberQ[excludedSymbolList,#Symbol]&]];
+
+
+handleUpdatedUsage[False] :=
+    Identity;
+
+handleUpdatedUsage["FindStringJoinThenAddNewline"][usageList_List] :=
+    usageList//Query[All,
+        If[ StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
+            <|#,"Usage"->ToExpression[#Symbol,StandardForm,Function[Null,MessageName[#,"usage"],{HoldFirst}]]<>"\n"|>,
+            (*Else*)
+            #
+        ]&
+    ];
+
+handleUpdatedUsage[Automatic] :=
+    handleUpdatedUsage["FindStringJoinThenAddNewline"];
 
 
 postFormat[usageList_List] :=

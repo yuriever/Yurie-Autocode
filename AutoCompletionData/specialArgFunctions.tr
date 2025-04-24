@@ -5,4 +5,5 @@
     "HideSymbolWithOwnValue"}}, "reportSuspiciousSet" -> 
   {0, {"ExcludedFile", "ExcludedSymbol", "ExcludeDollaredSymbol"}}, 
  "convertNotebookToWLT" -> {0, 0, {"ExcludedFile"}}, 
- "exportPublicSymbolUsage" -> {0, 0, {"ExcludedFile", "ExcludedSymbol"}}}
+ "exportPublicSymbolUsage" -> {0, 0, {"ExcludedFile", "ExcludedSymbol", 
+    "UpdatedUsageHandler"}}}
