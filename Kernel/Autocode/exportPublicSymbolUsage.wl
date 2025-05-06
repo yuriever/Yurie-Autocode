@@ -105,7 +105,7 @@ getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List,updated
 
 
 getUsageFromSingleFile[file_File,excludedSymbolList_List,updatedUsageHandler_] :=
-    file//CodeParse//getUsageListFromAST[excludedSymbolList]//handleUpdatedUsage[updatedUsageHandler]//postFormat;
+    file//CodeParse//getUsageListFromAST[excludedSymbolList]//handleUpdatedUsage[file,updatedUsageHandler]//postFormat;
 
 
 getUsageListFromAST[excludedSymbolList_List][ast_] :=
@@ -114,29 +114,30 @@ getUsageListFromAST[excludedSymbolList_List][ast_] :=
             Query[Select[!MemberQ[excludedSymbolList,#Symbol]&]];
 
 
-handleUpdatedUsage[False] :=
+handleUpdatedUsage[_,False] :=
     Identity;
 
-handleUpdatedUsage["FindStringJoinThenAddNewline"][usageList_List] :=
+handleUpdatedUsage[file_,"FindStringJoinThenAddNewline"][usageList_List] :=
     usageList//Query[All,
         If[ StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
-            <|#,"Usage"->
-                ToString[
-                    ToExpression[
-                        #Symbol,
-                        InputForm,
-                        Function[Null,MessageName[#,"usage"],{HoldFirst}]
-                    ]<>"\n",
-	                InputForm
-                ]
-            |>,
+            <|#,"Usage"->templateUpdatedUsage[file,#Symbol]|>,
             (*Else*)
             #
         ]&
     ];
 
-handleUpdatedUsage[Automatic] :=
-    handleUpdatedUsage["FindStringJoinThenAddNewline"];
+templateUpdatedUsage[file_,symbol_String]:=
+	ToString[
+	    ToExpression[
+	        symbol,
+	        InputForm,
+	        Function[Null,MessageName[#,"usage"],{HoldFirst}]
+	    ]<>"\n\[LeftDoubleBracket]"<>FileNameTake[file]<>"\[RightDoubleBracket] ",
+	    InputForm
+	];
+
+handleUpdatedUsage[file_,Automatic] :=
+    handleUpdatedUsage[file,"FindStringJoinThenAddNewline"];
 
 
 postFormat[usageList_List] :=
