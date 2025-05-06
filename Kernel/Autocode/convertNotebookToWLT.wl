@@ -92,8 +92,13 @@ getTestStringFromNotebook[notebook_] :=
     Module[ {notebookName},
         notebookName =
             FileNameTake[notebook];
-        notebook//importCellListFromNotebook//trimCellList//groupCellListByOutput//
-            groupedCellListToTestStringList[notebookName]//postFormat[notebookName]
+        notebook//
+            importCellListFromNotebook//
+            trimCellList//
+            groupCellListByOutput//
+            groupedCellListToTestStringList[notebookName]//
+            handleCellContext//
+            postFormat[notebookName]
     ];
 
 
@@ -239,6 +244,10 @@ indentNewline2[missing_Missing] :=
 
 (* ::Subsubsection:: *)
 (*Test string post-operation*)
+
+
+handleCellContext[testStringList_List] :=
+    testStringList//StringReplace["$CellContext`"->"Global`"];
 
 
 postFormat[notebookName_][testStringList_List] :=
