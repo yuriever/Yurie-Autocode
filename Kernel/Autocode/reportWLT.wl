@@ -33,7 +33,7 @@ Begin["`Private`"];
 (*Main*)
 
 
-reportWLT[dir_?DirectoryQ] :=
+reportWLT[dir:_?DirectoryQ|{__?DirectoryQ}] :=
     Module[ {report},
         report =
             Block[{Print},

@@ -48,7 +48,7 @@ reportSuspiciousSet//Options = {
 (*Main*)
 
 
-reportSuspiciousSet[dir_?DirectoryQ,opts:OptionsPattern[]] :=
+reportSuspiciousSet[dir:_?DirectoryQ|{__?DirectoryQ},opts:OptionsPattern[]] :=
     fileListFromDirectory[dir,OptionValue["ExcludedFile"]]//
         Query[All,
             <|

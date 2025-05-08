@@ -65,7 +65,7 @@ convertNotebookToWLT//Options = {
 (*Main*)
 
 
-convertNotebookToWLT[dir_?DirectoryQ,targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
+convertNotebookToWLT[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
     fileListFromDirectory[dir,OptionValue["ExcludedFile"]]//
         Query[All,<|#,"TestFile"->convertSingleNotebookToWLT[#File,targetDir]|>&]//
             Query[All,<|"IsSuccess"->!FailureQ[#TestFile],#|>&]//Dataset;
