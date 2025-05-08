@@ -61,7 +61,7 @@ exportPublicSymbolUsage//Options = {
 (*Main*)
 
 
-exportPublicSymbolUsage[dir_?DirectoryQ,targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
+exportPublicSymbolUsage[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
     Module[ {usage},
         usage =
             getUsageFromDirectory[dir,
