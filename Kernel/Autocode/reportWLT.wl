@@ -44,11 +44,7 @@ reportWLT[dir:_?DirectoryQ|{__?DirectoryQ}] :=
                     |>
                 ]
             ];
-        CellPrint@ExpressionCell[
-            report//dropTitleInReport,
-            "Output",
-            FilterRules[CurrentValue[{StyleDefinitions,"Echo"}],CellDingbat]
-        ];
+        report//dropTitleInReport
     ];
 
 
