@@ -7,8 +7,6 @@
 BeginPackage["Yurie`Autocode`convertNotebookToWLT`"];
 
 
-Needs["Wolfram`ErrorTools`V1`"];
-
 Needs["Yurie`Autocode`"];
 
 
@@ -18,9 +16,6 @@ Needs["Yurie`Autocode`"];
 
 convertNotebookToWLT::usage =
     "convert notebooks in the directory to *.wlt test files.";
-
-$reformatCode::usage =
-    "the format of input in tests.";
 
 
 (* ::Section:: *)
@@ -45,11 +40,7 @@ CreateErrorType[errorAdjacentOutput,{}];
 (*Constant*)
 
 
-$reformatCode = True;
-(*$reformatCode = False;*)
-
-
-$privateContext = "Yurie`Autocode`convertNotebookToWLT`temp`";
+$privateContext = "Yurie`Autocode`Temp`";
 
 
 (* ::Subsection:: *)
@@ -77,7 +68,7 @@ convertNotebookToWLT[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts
 
 convertSingleNotebookToWLT[notebook_,targetDir_] :=
     WithCleanup[
-        Handle[_Failure]@File@Export[
+        Catch@File@Export[
             FileNameJoin@{targetDir,FileBaseName[notebook]<>".wlt"},
             getTestStringFromNotebook[notebook],
             "Text"
@@ -148,10 +139,14 @@ groupCellListByOutput[cellList_List] :=
         positionList =
             SequencePosition[cellTypeList,{"Output","Output"}][[All,1]]-1;
         If[ positionList=!={},
-            Raise[
-                errorAdjacentOutput,
-                "There are adjacent outputs below the `positions`-th cells.",
-                <|"positions"->positionList|>
+            Throw@Failure[
+                "AdjacentOutput",
+                <|
+                    "MessageTemplate"->"There are adjacent outputs below the `Position`-th cells.",
+                    "MessageParameters"-><|
+                        "Position"->positionList
+                    |>
+                |>
             ]
         ];
         Split[cellList,(#1[["Type"]]=!="Output"&&#2[["Type"]]!="Input")&]
@@ -195,17 +190,6 @@ templateOfTestString[strList_List] :=
 
 
 getStringOf["Input",cellList_List] :=
-    Switch[ $reformatCode,
-        True,
-            getStringOf["InputWithInputForm",cellList],
-        False,
-            getStringOf["InputWithOriginalForm",cellList]
-    ];
-
-getStringOf["InputWithOriginalForm",cellList_List] :=
-    cellList//Query[SelectFirst[#Type==="Input"&],boxToString[#Box,"PlainText"]&]//indentNewline;
-
-getStringOf["InputWithInputForm",cellList_List] :=
     cellList//Query[SelectFirst[#Type==="Input"&],#Expr&,FailureAction->"Replace"]//indentNewline2;
 
 getStringOf["Output",cellList_List] :=
@@ -216,12 +200,6 @@ getStringOf["OutputThatCanSendMessage",cellList_List] :=
 
 getStringOf["Message",cellList_List] :=
     cellList//Query[Select[#Type==="Message"&],#Expr&]//Flatten//StringRiffle[#,{"{",",","}"}]&;
-
-
-(*convert the box data in cell to string.*)
-
-boxToString[box_,format_] :=
-    FrontEnd`ExportPacket[box,format]//FrontEndExecute//First;
 
 
 indentNewline[str_String] :=

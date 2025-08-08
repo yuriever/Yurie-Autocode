@@ -18,9 +18,6 @@ buildLibrary::usage =
 convertNotebookToWLT::usage =
     "convert notebooks in the directory to *.wlt test files.";
 
-$reformatCode::usage =
-    "the format of input in tests.";
-
 
 (* dependency.wl *)
 

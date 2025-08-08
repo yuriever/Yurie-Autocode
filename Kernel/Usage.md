@@ -14,8 +14,6 @@
 
 * `#!wl convertNotebookToWLT` - convert notebooks in the directory to *.wlt test files.
 
-* `#!wl $reformatCode` - the format of input in tests.
-
 
 <!-- dependency.wl -->
 
