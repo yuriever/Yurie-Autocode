@@ -238,7 +238,7 @@ postFormat[notebookName_][testStringList_List] :=
 
 beginGlobalContext[notebookName_] :=
     templateOfTestString[{
-        "Begin[\"Global`\"];\n\tClearAll[\"`*\"]",
+        "Begin[\"Global`\"];\n    ClearAll[\"`*\"]",
         "Null",
         "TestID->\"[0] "<>notebookName<>"\""
     }];
@@ -246,7 +246,7 @@ beginGlobalContext[notebookName_] :=
 
 endGlobalContext[notebookName_] :=
     templateOfTestString[{
-        "ClearAll[\"`*\"];\n\tEnd[]",
+        "ClearAll[\"`*\"];\n    End[]",
         "\"Global`\"",
         "TestID->\"[\[Infinity]] "<>notebookName<>"\""
     }];
