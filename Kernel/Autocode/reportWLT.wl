@@ -30,15 +30,22 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Constant*)
+
+
+dirLevelP = Infinity|_Integer?Positive|{_Integer?Positive};
+
+
+(* ::Subsection:: *)
 (*Main*)
 
 
-reportWLT[dir:_?DirectoryQ|{__?DirectoryQ}] :=
+reportWLT[dir:_?DirectoryQ|{__?DirectoryQ},level:dirLevelP:Infinity] :=
     Module[ {report},
         report =
             Block[{Print},
                 TestReport[
-                    FileNames["*.wlt",dir],
+                    FileNames["*.wlt",dir,level],
                     HandlerFunctions-><|
                         "TestEvaluated"->(Which[#Outcome=!="Success",Echo@#TestObject]&)
                     |>

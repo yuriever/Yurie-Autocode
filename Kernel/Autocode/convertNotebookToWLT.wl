@@ -63,7 +63,7 @@ convertNotebookToWLT[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts
 convertSingleNotebookToWLT[pathLevelInTestID_][notebook_,targetDir_] :=
     WithCleanup[
         Catch@File@Export[
-            FileNameJoin@{targetDir,FileBaseName[notebook]<>".wlt"},
+            FileNameJoin@{targetDir,FileNameTake[notebook,{-pathLevelInTestID,-2}],FileBaseName[notebook]<>".wlt"},
             getTestStringFromNotebook[pathLevelInTestID][notebook],
             "Text"
         ],
