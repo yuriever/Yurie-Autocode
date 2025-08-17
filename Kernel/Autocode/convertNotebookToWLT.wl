@@ -30,13 +30,6 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Error*)
-
-
-CreateErrorType[errorAdjacentOutput,{}];
-
-
-(* ::Subsection:: *)
 (*Constant*)
 
 
@@ -48,7 +41,8 @@ $privateContext = "Yurie`Autocode`Temp`";
 
 
 convertNotebookToWLT//Options = {
-    "ExcludedFile"->{}
+    "ExcludedFile"->{},
+    "PathLevelInTestID"->1
 };
 
 
@@ -58,7 +52,7 @@ convertNotebookToWLT//Options = {
 
 convertNotebookToWLT[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
     fileListFromDirectory[dir,OptionValue["ExcludedFile"]]//
-        Query[All,<|#,"TestFile"->convertSingleNotebookToWLT[#File,targetDir]|>&]//
+        Query[All,<|#,"TestFile"->convertSingleNotebookToWLT[OptionValue["PathLevelInTestID"]][#File,targetDir]|>&]//
             Query[All,<|"IsSuccess"->!FailureQ[#TestFile],#|>&]//Dataset;
 
 
@@ -66,11 +60,11 @@ convertNotebookToWLT[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts
 (*Helper*)
 
 
-convertSingleNotebookToWLT[notebook_,targetDir_] :=
+convertSingleNotebookToWLT[pathLevelInTestID_][notebook_,targetDir_] :=
     WithCleanup[
         Catch@File@Export[
             FileNameJoin@{targetDir,FileBaseName[notebook]<>".wlt"},
-            getTestStringFromNotebook[notebook],
+            getTestStringFromNotebook[pathLevelInTestID][notebook],
             "Text"
         ],
         (*Delete the private context for each file separately.*)
@@ -79,10 +73,17 @@ convertSingleNotebookToWLT[notebook_,targetDir_] :=
     ];
 
 
-getTestStringFromNotebook[notebook_] :=
+getTestStringFromNotebook[pathLevelInTestID_][notebook_] :=
     Module[ {notebookName},
         notebookName =
-            FileNameTake[notebook];
+            If[ IntegerQ[pathLevelInTestID]&&pathLevelInTestID>=1,
+                FileNameTake[notebook,-pathLevelInTestID]//StringDrop[#,-3]&,
+                (*Else*)
+                Throw@Failure[
+                    "InvalidPathLevel",
+                    <|"MessageTemplate"->"OptionValue[\"PathLevelInTestID\"] should be a positive integer."|>
+                ]
+            ];
         notebook//
             importCellListFromNotebook//
             trimCellList//
@@ -168,14 +169,14 @@ cellListToTestString[notebookName_][cellList_List,id_Integer] :=
             templateOfTestString[{
                 getStringOf["Input",cellList],
                 getStringOf["Output",cellList],
-                "TestID->"<>"\""<>ToString[id]<>"-"<>notebookName<>"\""
+                "TestID->"<>"\"["<>ToString[id]<>"] "<>notebookName<>"\""
             }],
             (*Else*)
             templateOfTestString[{
                 getStringOf["Input",cellList],
                 getStringOf["OutputThatCanSendMessage",cellList],
                 msgString,
-                "TestID->"<>"\""<>ToString[id]<>"-"<>notebookName<>"\""
+                "TestID->"<>"\"["<>ToString[id]<>"] "<>notebookName<>"\""
             }]
         ]
     ];
@@ -229,7 +230,7 @@ handleCellContext[testStringList_List] :=
 
 
 postFormat[notebookName_][testStringList_List] :=
-    "\n\n(*"<>notebookName<>"*)\n\n"<>
+    "\n\n(* "<>notebookName<>" *)\n\n"<>
         beginGlobalContext[notebookName]<>"\n\n"<>
             StringRiffle[testStringList,"\n\n"]<>"\n\n"<>
                 endGlobalContext[notebookName];
@@ -239,7 +240,7 @@ beginGlobalContext[notebookName_] :=
     templateOfTestString[{
         "Begin[\"Global`\"];\n\tClearAll[\"`*\"]",
         "Null",
-        "TestID->\"0-"<>notebookName<>"\""
+        "TestID->\"[0] "<>notebookName<>"\""
     }];
 
 
@@ -247,7 +248,7 @@ endGlobalContext[notebookName_] :=
     templateOfTestString[{
         "ClearAll[\"`*\"];\n\tEnd[]",
         "\"Global`\"",
-        "TestID->\"\[Infinity]-"<>notebookName<>"\""
+        "TestID->\"[\[Infinity]] "<>notebookName<>"\""
     }];
 
 

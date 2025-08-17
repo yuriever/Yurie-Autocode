@@ -1,6 +1,6 @@
 
 
-(*exportArgumentCompletion.nb*)
+(* exportArgumentCompletion *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"0-exportArgumentCompletion.nb"
+    TestID->"[0] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -18,7 +18,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-exportArgumentCompletion.nb"
+    TestID->"[1] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -26,7 +26,7 @@ VerificationTest[
     ,
     {2, 1, 0}
     ,
-    TestID->"2-exportArgumentCompletion.nb"
+    TestID->"[2] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -34,7 +34,7 @@ VerificationTest[
     ,
     {2, 1, 0}
     ,
-    TestID->"3-exportArgumentCompletion.nb"
+    TestID->"[3] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -44,7 +44,7 @@ VerificationTest[
     ,
     {Yurie`Autocode`exportArgumentCompletion::hasOwnValues}
     ,
-    TestID->"4-exportArgumentCompletion.nb"
+    TestID->"[4] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -52,7 +52,7 @@ VerificationTest[
     ,
     1
     ,
-    TestID->"5-exportArgumentCompletion.nb"
+    TestID->"[5] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -60,7 +60,7 @@ VerificationTest[
     ,
     {"f0" -> {0, 0}, "f1" -> {0}, "f2" -> {}, "g0" -> {0, 0}, "g1" -> {0}, "g2" -> {}}
     ,
-    TestID->"6-exportArgumentCompletion.nb"
+    TestID->"[6] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -68,7 +68,7 @@ VerificationTest[
     ,
     {"k" -> {0, {"Test"}}, "j" -> {0, {"Test"}}, "l" -> {0, {"Test"}}}
     ,
-    TestID->"7-exportArgumentCompletion.nb"
+    TestID->"[7] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -78,7 +78,7 @@ VerificationTest[
     ,
     {Yurie`Autocode`exportArgumentCompletion::hasOwnValues,Yurie`Autocode`exportArgumentCompletion::noStringOptions}
     ,
-    TestID->"8-exportArgumentCompletion.nb"
+    TestID->"[8] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -86,7 +86,7 @@ VerificationTest[
     ,
     "k" -> {{"arg1", "arg2"}, 0, {"Test"}}
     ,
-    TestID->"9-exportArgumentCompletion.nb"
+    TestID->"[9] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -95,7 +95,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"10-exportArgumentCompletion.nb"
+    TestID->"[10] exportArgumentCompletion"
 ]
 
 VerificationTest[
@@ -104,5 +104,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"∞-exportArgumentCompletion.nb"
+    TestID->"[∞] exportArgumentCompletion"
 ]

@@ -1,6 +1,6 @@
 
 
-(*convertNotebookToWLT-MFMakeBox.nb*)
+(* convertNotebookToWLT-MFMakeBox *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"0-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[0] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[1] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"2-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[2] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -32,7 +32,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"3-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[3] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -40,7 +40,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"4-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[4] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -48,7 +48,7 @@ VerificationTest[
     ,
     1 + Global`hb
     ,
-    TestID->"5-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[5] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -56,7 +56,7 @@ VerificationTest[
     ,
     1 + Test`Private`hb1
     ,
-    TestID->"6-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[6] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     1 + Global`Private`hb2
     ,
-    TestID->"7-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[7] convertNotebookToWLT-MFMakeBox"
 ]
 
 VerificationTest[
@@ -73,5 +73,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"∞-convertNotebookToWLT-MFMakeBox.nb"
+    TestID->"[∞] convertNotebookToWLT-MFMakeBox"
 ]

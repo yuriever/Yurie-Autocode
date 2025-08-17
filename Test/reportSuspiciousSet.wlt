@@ -1,6 +1,6 @@
 
 
-(*reportSuspiciousSet.nb*)
+(* reportSuspiciousSet *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"0-reportSuspiciousSet.nb"
+    TestID->"[0] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -18,7 +18,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-reportSuspiciousSet.nb"
+    TestID->"[1] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -26,7 +26,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "f0[]", "RHS" -> "1", "Position" -> {25, 1}], Association["LHS" -> "List[x, y]", "RHS" -> "List[1, 2]", "Position" -> {22, 1}], Association["LHS" -> "g1", "RHS" -> "1", "Position" -> {37, 9}], Association["LHS" -> "z", "RHS" -> "y", "Position" -> {49, 9}]}
     ,
-    TestID->"2-reportSuspiciousSet.nb"
+    TestID->"[2] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -34,7 +34,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"3-reportSuspiciousSet.nb"
+    TestID->"[3] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -42,7 +42,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 1}]}
     ,
-    TestID->"4-reportSuspiciousSet.nb"
+    TestID->"[4] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -50,7 +50,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x[]", "RHS" -> "1", "Position" -> {1, 1}]}
     ,
-    TestID->"5-reportSuspiciousSet.nb"
+    TestID->"[5] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -58,7 +58,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "List[x, y]", "RHS" -> "List[1, 1]", "Position" -> {1, 1}]}
     ,
-    TestID->"6-reportSuspiciousSet.nb"
+    TestID->"[6] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -66,7 +66,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 1}], Association["LHS" -> "y[]", "RHS" -> "1", "Position" -> {1, 5}]}
     ,
-    TestID->"7-reportSuspiciousSet.nb"
+    TestID->"[7] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -74,7 +74,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "1", "Position" -> {2, 1}], Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 1}], Association["LHS" -> "y[]", "RHS" -> "1", "Position" -> {1, 5}]}
     ,
-    TestID->"8-reportSuspiciousSet.nb"
+    TestID->"[8] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -82,7 +82,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "Set[y[], 1]", "Position" -> {1, 1}], Association["LHS" -> "y[]", "RHS" -> "1", "Position" -> {1, 3}]}
     ,
-    TestID->"9-reportSuspiciousSet.nb"
+    TestID->"[9] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -90,7 +90,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "y", "RHS" -> "1", "Position" -> {1, 16}]}
     ,
-    TestID->"10-reportSuspiciousSet.nb"
+    TestID->"[10] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -98,7 +98,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "y", "RHS" -> "1", "Position" -> {1, 16}]}
     ,
-    TestID->"11-reportSuspiciousSet.nb"
+    TestID->"[11] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -106,7 +106,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "y", "RHS" -> "1", "Position" -> {1, 15}]}
     ,
-    TestID->"12-reportSuspiciousSet.nb"
+    TestID->"[12] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -114,7 +114,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "w", "RHS" -> "1", "Position" -> {1, 34}]}
     ,
-    TestID->"13-reportSuspiciousSet.nb"
+    TestID->"[13] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -122,7 +122,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "y", "RHS" -> "1", "Position" -> {1, 1}], Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 21}]}
     ,
-    TestID->"14-reportSuspiciousSet.nb"
+    TestID->"[14] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -130,7 +130,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "Pattern[x, Blank[]]", "RHS" -> "Pattern[y, Blank[]]", "Position" -> {1, 13}]}
     ,
-    TestID->"15-reportSuspiciousSet.nb"
+    TestID->"[15] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -138,7 +138,7 @@ VerificationTest[
     ,
     {{}, {{}, {}}, {}}
     ,
-    TestID->"16-reportSuspiciousSet.nb"
+    TestID->"[16] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -146,7 +146,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 29}]}
     ,
-    TestID->"17-reportSuspiciousSet.nb"
+    TestID->"[17] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -154,7 +154,7 @@ VerificationTest[
     ,
     {Association["LHS" -> "x", "RHS" -> "1", "Position" -> {1, 29}], Association["LHS" -> "List[a, d]", "RHS" -> "List[1, 1]", "Position" -> {1, 16}]}
     ,
-    TestID->"18-reportSuspiciousSet.nb"
+    TestID->"[18] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -162,7 +162,7 @@ VerificationTest[
     ,
     {}
     ,
-    TestID->"19-reportSuspiciousSet.nb"
+    TestID->"[19] reportSuspiciousSet"
 ]
 
 VerificationTest[
@@ -171,5 +171,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"∞-reportSuspiciousSet.nb"
+    TestID->"[∞] reportSuspiciousSet"
 ]
