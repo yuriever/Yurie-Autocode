@@ -1,6 +1,6 @@
 
 
-(* convertNotebookToWLT-simple *)
+(* convertNotebookToWLT-simple.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] convertNotebookToWLT-simple"
+    TestID->"[0] convertNotebookToWLT-simple.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[1] convertNotebookToWLT-simple"
+    TestID->"[1] convertNotebookToWLT-simple.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     "#ff0000"
     ,
-    TestID->"[2] convertNotebookToWLT-simple"
+    TestID->"[2] convertNotebookToWLT-simple.nb"
 ]
 
 VerificationTest[
@@ -33,5 +33,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] convertNotebookToWLT-simple"
+    TestID->"[∞] convertNotebookToWLT-simple.nb"
 ]

@@ -77,7 +77,7 @@ getTestStringFromNotebook[pathLevelInTestID_][notebook_] :=
     Module[ {notebookName},
         notebookName =
             If[ IntegerQ[pathLevelInTestID]&&pathLevelInTestID>=1,
-                FileNameTake[notebook,-pathLevelInTestID]//StringDrop[#,-3]&,
+                FileNameTake[notebook,-pathLevelInTestID],
                 (*Else*)
                 Throw@Failure[
                     "InvalidPathLevel",

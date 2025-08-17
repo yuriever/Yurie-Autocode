@@ -1,6 +1,6 @@
 
 
-(* convertNotebookToWLT-sample1 *)
+(* convertNotebookToWLT-sample1.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] convertNotebookToWLT-sample1"
+    TestID->"[0] convertNotebookToWLT-sample1.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     2
     ,
-    TestID->"[1] convertNotebookToWLT-sample1"
+    TestID->"[1] convertNotebookToWLT-sample1.nb"
 ]
 
 VerificationTest[
@@ -24,7 +24,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[2] convertNotebookToWLT-sample1"
+    TestID->"[2] convertNotebookToWLT-sample1.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
     ,
     2
     ,
-    TestID->"[3] convertNotebookToWLT-sample1"
+    TestID->"[3] convertNotebookToWLT-sample1.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[4] convertNotebookToWLT-sample1"
+    TestID->"[4] convertNotebookToWLT-sample1.nb"
 ]
 
 VerificationTest[
@@ -50,5 +50,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] convertNotebookToWLT-sample1"
+    TestID->"[∞] convertNotebookToWLT-sample1.nb"
 ]

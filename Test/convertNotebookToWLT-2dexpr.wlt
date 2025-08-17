@@ -1,6 +1,6 @@
 
 
-(* convertNotebookToWLT-2dexpr *)
+(* convertNotebookToWLT-2dexpr.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] convertNotebookToWLT-2dexpr"
+    TestID->"[0] convertNotebookToWLT-2dexpr.nb"
 ]
 
 VerificationTest[
@@ -16,7 +16,7 @@ VerificationTest[
     ,
     Derivative[1, 1][f][x, y]
     ,
-    TestID->"[1] convertNotebookToWLT-2dexpr"
+    TestID->"[1] convertNotebookToWLT-2dexpr.nb"
 ]
 
 VerificationTest[
@@ -25,5 +25,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] convertNotebookToWLT-2dexpr"
+    TestID->"[∞] convertNotebookToWLT-2dexpr.nb"
 ]

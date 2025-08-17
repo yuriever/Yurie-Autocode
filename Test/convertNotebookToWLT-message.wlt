@@ -1,6 +1,6 @@
 
 
-(* convertNotebookToWLT-message *)
+(* convertNotebookToWLT-message.nb *)
 
 VerificationTest[
     Begin["Global`"];
@@ -8,7 +8,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[0] convertNotebookToWLT-message"
+    TestID->"[0] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -18,7 +18,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[1] convertNotebookToWLT-message"
+    TestID->"[1] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -28,7 +28,7 @@ VerificationTest[
     ,
     {Global`f::test,Global`f::test2}
     ,
-    TestID->"[2] convertNotebookToWLT-message"
+    TestID->"[2] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -36,7 +36,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[3] convertNotebookToWLT-message"
+    TestID->"[3] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -46,7 +46,7 @@ VerificationTest[
     ,
     {Global`g::test}
     ,
-    TestID->"[4] convertNotebookToWLT-message"
+    TestID->"[4] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -54,7 +54,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[5] convertNotebookToWLT-message"
+    TestID->"[5] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -64,7 +64,7 @@ VerificationTest[
     ,
     {Global`g1::test}
     ,
-    TestID->"[6] convertNotebookToWLT-message"
+    TestID->"[6] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -72,7 +72,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"[7] convertNotebookToWLT-message"
+    TestID->"[7] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -82,7 +82,7 @@ VerificationTest[
     ,
     {Global`g2::test}
     ,
-    TestID->"[8] convertNotebookToWLT-message"
+    TestID->"[8] convertNotebookToWLT-message.nb"
 ]
 
 VerificationTest[
@@ -91,5 +91,5 @@ VerificationTest[
     ,
     "Global`"
     ,
-    TestID->"[∞] convertNotebookToWLT-message"
+    TestID->"[∞] convertNotebookToWLT-message.nb"
 ]
