@@ -43,11 +43,11 @@ $argumentFileName = "specialArgFunctions.tr";
 (*Message*)
 
 
-exportArgumentCompletion::hasOwnValues =
+exportArgumentCompletion::OwnValuePresent =
     "The symbol `` has own values."
 
-exportArgumentCompletion::noStringOptions =
-    "The symbol `` has no option with string key."
+exportArgumentCompletion::NoStringKey =
+    "The symbol `` has no string option key."
 
 
 (* ::Subsection:: *)
@@ -88,8 +88,21 @@ getOptionCompletionDataList[funDataList_List] :=
 getOptionCompletionData[funName_String] :=
     Rule[funName,{Splice@ConstantArray[0,maxNumberOfNormalArgument@funName],optionKeyList@funName}];
 
-getOptionCompletionData[Rule[funName_,completionData_]] :=
-    Rule[funName,{Splice@completionData,optionKeyList@funName}];
+getOptionCompletionData[Verbatim[Rule][funName_,completionData_]] :=
+    Rule[funName,handleRepeatedOption[funName,completionData]];
+
+
+handleRepeatedOption[funName_,completionData_] :=
+    completionData//Replace[#,{
+        Verbatim[Rule][Verbatim[Blank][],Verbatim[Blank][]]:>
+            With[ {keyList = optionKeyList@funName},
+                Splice@ConstantArray[keyList,Length[keyList]]
+            ],
+        Verbatim[Rule][Verbatim[Blank][],times_Integer]:>
+            Splice@ConstantArray[optionKeyList@funName,times],
+        Verbatim[Rule][optionList:{__String},times_Integer]:>
+            Splice@ConstantArray[optionList,times]
+    },{1}]&;
 
 
 maxNumberOfNormalArgument[funName_String] :=
@@ -104,7 +117,7 @@ maxNumberOfNormalArgument[funName_String] :=
 
 checkOwnValues[funName_String] :=
     If[ Quiet@OwnValues[funName]=!={},
-        Message[exportArgumentCompletion::hasOwnValues,funName];
+        Message[exportArgumentCompletion::OwnValuePresent,funName];
         funName
     ];
 
@@ -156,7 +169,7 @@ optionKeyList[funName_String] :=
         keys =
             ToExpression[funName,StandardForm,Function[Null,Options@Unevaluated[#],HoldFirst]]//Keys//Cases[_String];
         If[ keys==={},
-            Message[exportArgumentCompletion::noStringOptions,funName];
+            Message[exportArgumentCompletion::NoStringKey,funName];
             Nothing,
             (*Else*)
             keys
