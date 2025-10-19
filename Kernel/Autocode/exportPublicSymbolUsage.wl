@@ -62,13 +62,15 @@ exportPublicSymbolUsage//Options = {
 
 
 exportPublicSymbolUsage[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
-    Module[ {usage},
-        usage =
-            getUsageFromDirectory[dir,
-                OptionValue["ExcludedFile"],
-                OptionValue["ExcludedSymbol"],
-                OptionValue["UpdatedUsageHandler"]
-            ];
+    With[ {
+            usage =
+                getUsageFromDirectory[
+                    dir,
+                    OptionValue["ExcludedFile"],
+                    OptionValue["ExcludedSymbol"],
+                    OptionValue["UpdatedUsageHandler"]
+                ]
+        },
         {
             File@Export[
                 FileNameJoin@{targetDir,$usageFileName["WL"]},
@@ -90,38 +92,52 @@ exportPublicSymbolUsage[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,o
 
 getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List,updatedUsageHandler_] :=
     fileListFromDirectory[dir,excludedFileList]//
-        (* Get the list of usages from *.wl files. *)
-        Query[All,<|
-            "FileName"->#FileName,
-            getUsageFromSingleFile[#File,excludedSymbolList,updatedUsageHandler]
-        |>&]//
-            (* Drop the files without usage. *)
-            Select[KeyExistsQ[#,"WL"]&&KeyExistsQ[#,"MD"]&]//
-                (* Merge and mark the usages from different files. *)
-                Query[All,<|
-                    "WL"->"(* ::Subsubsection:: *)\n(*"<>#FileName<>"*)\n\n\n"<>#WL,
-                    "MD"->"## "<>#FileName<>"\n\n"<>#MD
-                |>&]//
-                    Merge[StringRiffle[#,"\n\n\n"]&]//
-                        Query[
-                            <|
-                                "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n\n"<>#WL,
-                                "MD"->"# Usage\n\n"<>#MD
-                            |>&
-                        ];
+        getUsageFromFileList[excludedSymbolList,updatedUsageHandler]//
+            mergeUsageAcrossFile;
 
 
-getUsageFromSingleFile[file_File,excludedSymbolList_List,updatedUsageHandler_] :=
+getUsageFromFileList[excludedSymbolList_List,updatedUsageHandler_][fileList_List] :=
+    fileList//Query[All,<|
+        "FileName"->#FileName,
+        getUsageFromSingleFile[excludedSymbolList,updatedUsageHandler][#File]
+    |>&];
+
+
+getUsageFromSingleFile[excludedSymbolList_List,updatedUsageHandler_][file_File] :=
     file//CodeParse//
         getUsageListFromAST[excludedSymbolList]//
             handleUpdatedUsage[file,updatedUsageHandler]//
-                postFormat;
+                formatUsage;
 
 
 getUsageListFromAST[excludedSymbolList_List][ast_] :=
     ast//DeleteCases[#,_ContextNode,Infinity]&//
         Cases[#,patternOfUsage,Infinity]&//
-            Query[Discard[MemberQ[excludedSymbolList,#Symbol]&]];
+            Discard[MemberQ[excludedSymbolList,#Symbol]&];
+
+
+fileListFromDirectory[dir_,excludedFileList_List] :=
+    FileNames["*.wl",dir]//
+        Query[All,<|"FileName"->FileNameTake[#],"File"->File[#]|>&]//
+            Discard[MatchQ[#FileName,Alternatives@@excludedFileList]&];
+
+
+mergeUsageAcrossFile[fileUsageList_List] :=
+    fileUsageList//
+        (* Drop the files without usage. *)
+        Select[KeyExistsQ[#,"WL"]&]//
+            (* Merge and mark the usages from different files. *)
+            Query[All,<|
+                "WL"->"(* ::Subsubsection:: *)\n(*"<>#FileName<>"*)\n\n\n"<>#WL,
+                "MD"->"## "<>#FileName<>"\n\n"<>#MD
+            |>&]//
+                Merge[StringRiffle[#,"\n\n\n"]&]//
+                    Query[
+                        <|
+                            "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n\n"<>#WL,
+                            "MD"->"# Usage\n\n"<>#MD
+                        |>&
+                    ];
 
 
 handleUpdatedUsage[file_,False][usageList_List] :=
@@ -147,7 +163,7 @@ templateUpdatedUsage[file_,symbol_String]:=
     ];
 
 
-postFormat[usageList_List] :=
+formatUsage[usageList_List] :=
     usageList//Query[All,<|
         "WL"->
             TemplateObject[
@@ -169,12 +185,6 @@ convertSpecialCharacter[str_] :=
         "`"->"\`",
         "\n"->"\n\n\t* "
     }];
-
-
-fileListFromDirectory[dir_,excludedFileList_List] :=
-    FileNames["*.wl",dir]//
-        Query[All,<|"FileName"->FileNameTake[#],"File"->File[#]|>&]//
-            Query[Discard[MatchQ[#FileName,Alternatives@@excludedFileList]&]];
 
 
 (* ::Subsection:: *)
