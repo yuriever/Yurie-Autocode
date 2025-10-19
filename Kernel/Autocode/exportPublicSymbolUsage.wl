@@ -173,7 +173,7 @@ formatUsage[usageList_List] :=
 convertSpecialCharacter[str_] :=
     str//StringReplace[{
         "`"->"\`",
-        "\n"->"\n\n\t* "
+        "\n"->"\n\n    * "
     }];
 
 
