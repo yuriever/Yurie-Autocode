@@ -128,13 +128,13 @@ mergeUsageAcrossFile[fileUsageList_List] :=
         Select[KeyExistsQ[#,"WL"]&]//
             (* Merge and mark the usages from different files. *)
             Query[All,<|
-                "WL"->"(* ::Subsubsection:: *)\n(*"<>#FileName<>"*)\n\n\n"<>#WL,
+                "WL"->"\n(* ::Subsubsection:: *)\n(*"<>#FileName<>"*)\n\n\n"<>#WL,
                 "MD"->"## "<>#FileName<>"\n\n"<>#MD
             |>&]//
-                Merge[StringRiffle[#,"\n\n\n"]&]//
+                Merge[StringRiffle[#,"\n\n"]&]//
                     Query[
                         <|
-                            "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n\n"<>#WL,
+                            "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n"<>#WL,
                             "MD"->"# Usage\n\n"<>#MD
                         |>&
                     ];
