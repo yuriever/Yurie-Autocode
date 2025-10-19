@@ -134,7 +134,7 @@ mergeUsageAcrossFile[fileUsageList_List] :=
                 Merge[StringRiffle[#,"\n\n"]&]//
                     Query[
                         <|
-                            "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n"<>#WL,
+                            "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage*)\n\n"<>#WL,
                             "MD"->"# Usage\n\n"<>#MD
                         |>&
                     ];
@@ -165,19 +165,9 @@ templateUpdatedUsage[file_,symbol_String]:=
 
 formatUsage[usageList_List] :=
     usageList//Query[All,<|
-        "WL"->
-            TemplateObject[
-                {TemplateSlot["Symbol"],"::usage =\n    ",TemplateSlot["Usage"],";"},
-                InsertionFunction->ToString,
-                CombinerFunction->StringJoin
-            ],
-        "MD"->
-            TemplateObject[
-                {"* `#!wl ",TemplateSlot["Symbol"],"`"," - ",TemplateSlot["Usage"]},
-                InsertionFunction->(convertSpecialCharacter@ToString@ToExpression[#]&),
-                CombinerFunction->StringJoin
-            ]
-    |>]//Merge[StringRiffle[#,"\n\n"]&];
+        "WL"->#Symbol<>"::usage =\n    "<>ToString[#Usage]<>";",
+        "MD"->"* `#!wl "<>#Symbol<>"` - "<>convertSpecialCharacter[ToString[ToExpression[#Usage]]]
+    |>&]//Merge[StringRiffle[#,"\n\n"]&];
 
 
 convertSpecialCharacter[str_] :=
