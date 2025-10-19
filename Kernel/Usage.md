@@ -1,21 +1,20 @@
-<!-- AST.wl -->
+# Usage
+
+## AST.wl
 
 * `#!wl ASTHierarchy` - return the hierarchical structure of the AST.
 
 * `#!wl ASTHierarchyPrint` - print the hierarchical structure of the AST.
 
-
-<!-- buildLibrary.wl -->
+## buildLibrary.wl
 
 * `#!wl buildLibrary` - build the library.
 
-
-<!-- convertNotebookToWLT.wl -->
+## convertNotebookToWLT.wl
 
 * `#!wl convertNotebookToWLT` - convert notebooks in the directory to *.wlt test files.
 
-
-<!-- dependency.wl -->
+## dependency.wl
 
 * `#!wl dependency` - symbol dependency from definitions.
 
@@ -25,26 +24,22 @@
 
 * `#!wl $dependencyExclusion` - the excluded contexts in dependency*.
 
-
-<!-- exportArgumentCompletion.wl -->
+## exportArgumentCompletion.wl
 
 * `#!wl exportArgumentCompletion` - export the argument completion data.
 
 * `#!wl $argumentFileName` - default name of the argument completion file.
 
-
-<!-- exportPublicSymbolUsage.wl -->
+## exportPublicSymbolUsage.wl
 
 * `#!wl exportPublicSymbolUsage` - export the usages of public symbols in the directory.
 
 * `#!wl $usageFileName` - default name of the usage file.
 
-
-<!-- reportSuspiciousSet.wl -->
+## reportSuspiciousSet.wl
 
 * `#!wl reportSuspiciousSet` - report suspicious set in the *.wl files in the directory.
 
-
-<!-- reportWLT.wl -->
+## reportWLT.wl
 
 * `#!wl reportWLT` - report the unit test in the directory.

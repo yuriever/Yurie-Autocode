@@ -4,6 +4,6 @@
   {0, {"HideContext", "HideSystemSymbol", "HideSymbolWithoutDefinition", 
     "HideSymbolWithOwnValue"}}, "reportSuspiciousSet" -> 
   {0, {"ExcludedFile", "ExcludedSymbol", "ExcludeDollaredSymbol"}}, 
- "convertNotebookToWLT" -> {0, 0, {"ExcludedFile"}}, 
+ "convertNotebookToWLT" -> {0, 0, {"ExcludedFile", "PathLevelInTestID"}}, 
  "exportPublicSymbolUsage" -> {0, 0, {"ExcludedFile", "ExcludedSymbol", 
     "UpdatedUsageHandler"}}}

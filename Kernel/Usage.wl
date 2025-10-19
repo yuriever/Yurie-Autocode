@@ -1,4 +1,12 @@
-(* AST.wl *)
+(* ::Package:: *)
+
+(* ::Subsection:: *)
+(*Usage*)
+
+
+(* ::Subsubsection:: *)
+(*AST.wl*)
+
 
 ASTHierarchy::usage =
     "return the hierarchical structure of the AST.";
@@ -7,19 +15,25 @@ ASTHierarchyPrint::usage =
     "print the hierarchical structure of the AST.";
 
 
-(* buildLibrary.wl *)
+(* ::Subsubsection:: *)
+(*buildLibrary.wl*)
+
 
 buildLibrary::usage =
     "build the library.";
 
 
-(* convertNotebookToWLT.wl *)
+(* ::Subsubsection:: *)
+(*convertNotebookToWLT.wl*)
+
 
 convertNotebookToWLT::usage =
     "convert notebooks in the directory to *.wlt test files.";
 
 
-(* dependency.wl *)
+(* ::Subsubsection:: *)
+(*dependency.wl*)
+
 
 dependency::usage =
     "symbol dependency from definitions.";
@@ -34,7 +48,9 @@ $dependencyExclusion::usage =
     "the excluded contexts in dependency*.";
 
 
-(* exportArgumentCompletion.wl *)
+(* ::Subsubsection:: *)
+(*exportArgumentCompletion.wl*)
+
 
 exportArgumentCompletion::usage =
     "export the argument completion data.";
@@ -43,7 +59,9 @@ $argumentFileName::usage =
     "default name of the argument completion file.";
 
 
-(* exportPublicSymbolUsage.wl *)
+(* ::Subsubsection:: *)
+(*exportPublicSymbolUsage.wl*)
+
 
 exportPublicSymbolUsage::usage =
     "export the usages of public symbols in the directory.";
@@ -52,13 +70,17 @@ $usageFileName::usage =
     "default name of the usage file.";
 
 
-(* reportSuspiciousSet.wl *)
+(* ::Subsubsection:: *)
+(*reportSuspiciousSet.wl*)
+
 
 reportSuspiciousSet::usage =
     "report suspicious set in the *.wl files in the directory.";
 
 
-(* reportWLT.wl *)
+(* ::Subsubsection:: *)
+(*reportWLT.wl*)
+
 
 reportWLT::usage =
     "report the unit test in the directory.";
