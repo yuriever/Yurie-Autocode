@@ -90,34 +90,44 @@ exportPublicSymbolUsage[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,o
 
 getUsageFromDirectory[dir_,excludedFileList_List,excludedSymbolList_List,updatedUsageHandler_] :=
     fileListFromDirectory[dir,excludedFileList]//
-        (*get the list of usages from *.wl files.*)
+        (* Get the list of usages from *.wl files. *)
         Query[All,<|
             "FileName"->#FileName,
             getUsageFromSingleFile[#File,excludedSymbolList,updatedUsageHandler]
         |>&]//
-            (*drop the files without usage.*)
+            (* Drop the files without usage. *)
             Select[KeyExistsQ[#,"WL"]&&KeyExistsQ[#,"MD"]&]//
-                (*merge and mark the usages from different files.*)
+                (* Merge and mark the usages from different files. *)
                 Query[All,<|
-                    "WL"->"(* "<>#FileName<>" *)\n\n"<>#WL,
-                    "MD"->"<!-- "<>#FileName<>" -->\n\n"<>#MD
-                |>&]//Merge[StringRiffle[#,"\n\n\n"]&];
+                    "WL"->"(* ::Subsubsection:: *)\n(*"<>#FileName<>"*)\n\n\n"<>#WL,
+                    "MD"->"## "<>#FileName<>"\n\n"<>#MD
+                |>&]//
+                    Merge[StringRiffle[#,"\n\n\n"]&]//
+                        Query[
+                            <|
+                                "WL"->"(* ::Package:: *)\n\n(* ::Subsection:: *)\n(*Usage.wl*)\n\n\n"<>#WL,
+                                "MD"->"# Usage\n\n"<>#MD
+                            |>&
+                        ];
 
 
 getUsageFromSingleFile[file_File,excludedSymbolList_List,updatedUsageHandler_] :=
-    file//CodeParse//getUsageListFromAST[excludedSymbolList]//handleUpdatedUsage[file,updatedUsageHandler]//postFormat;
+    file//CodeParse//
+        getUsageListFromAST[excludedSymbolList]//
+            handleUpdatedUsage[file,updatedUsageHandler]//
+                postFormat;
 
 
 getUsageListFromAST[excludedSymbolList_List][ast_] :=
     ast//DeleteCases[#,_ContextNode,Infinity]&//
         Cases[#,patternOfUsage,Infinity]&//
-            Query[Select[!MemberQ[excludedSymbolList,#Symbol]&]];
+            Query[Discard[MemberQ[excludedSymbolList,#Symbol]&]];
 
 
-handleUpdatedUsage[_,False] :=
-    Identity;
+handleUpdatedUsage[file_,False][usageList_List] :=
+    usageList;
 
-handleUpdatedUsage[file_,"FindStringJoinThenAddNewline"][usageList_List] :=
+handleUpdatedUsage[file_,Automatic|"FindStringJoinThenAddNewline"][usageList_List] :=
     usageList//Query[All,
         If[ StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
             <|#,"Usage"->templateUpdatedUsage[file,#Symbol]|>,
@@ -127,17 +137,14 @@ handleUpdatedUsage[file_,"FindStringJoinThenAddNewline"][usageList_List] :=
     ];
 
 templateUpdatedUsage[file_,symbol_String]:=
-	ToString[
-	    ToExpression[
-	        symbol,
-	        InputForm,
-	        Function[Null,MessageName[#,"usage"],{HoldFirst}]
-	    ]<>"\n\[LeftDoubleBracket]"<>FileNameTake[file]<>"\[RightDoubleBracket] ",
-	    InputForm
-	];
-
-handleUpdatedUsage[file_,Automatic] :=
-    handleUpdatedUsage[file,"FindStringJoinThenAddNewline"];
+    ToString[
+        ToExpression[
+            symbol,
+            InputForm,
+            Function[Null,MessageName[#,"usage"],{HoldFirst}]
+        ]<>"\n\[LeftDoubleBracket]"<>FileNameTake[file]<>"\[RightDoubleBracket] ",
+        InputForm
+    ];
 
 
 postFormat[usageList_List] :=
@@ -151,29 +158,23 @@ postFormat[usageList_List] :=
         "MD"->
             TemplateObject[
                 {"* `#!wl ",TemplateSlot["Symbol"],"`"," - ",TemplateSlot["Usage"]},
-                InsertionFunction->markdownEscape@*(
-                    If[ StringStartsQ[#,"StringJoin"],
-                        ToString@ToExpression[#],
-                        (*Else*)
-                        StringReplace[#,StartOfString~~"\""~~str___~~"\""~~EndOfString:>str]
-                    ]&
-                ),
+                InsertionFunction->(convertSpecialCharacter@ToString@ToExpression[#]&),
                 CombinerFunction->StringJoin
             ]
     |>]//Merge[StringRiffle[#,"\n\n"]&];
 
 
-markdownEscape[str_] :=
+convertSpecialCharacter[str_] :=
     str//StringReplace[{
         "`"->"\`",
-        "\n"->" "
+        "\n"->"\n\n\t* "
     }];
 
 
 fileListFromDirectory[dir_,excludedFileList_List] :=
     FileNames["*.wl",dir]//
         Query[All,<|"FileName"->FileNameTake[#],"File"->File[#]|>&]//
-            Query[Select[!MatchQ[#FileName,Alternatives@@excludedFileList]&]];
+            Query[Discard[MatchQ[#FileName,Alternatives@@excludedFileList]&]];
 
 
 (* ::Subsection:: *)

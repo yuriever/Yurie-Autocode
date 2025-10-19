@@ -17,7 +17,15 @@ b::usage =
 c::usage =
     "this is "<>
     "a test.\n"<>
-    "This is another test."
+    "This is another test.";
+
+c::usage =
+    "this is "<>
+    "a test."<>
+    "\n"<>
+    "This is another test."<>
+    "\n"<>
+    "This is another test.";
 
 
 Begin["`Private`"];
