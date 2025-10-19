@@ -15,6 +15,9 @@ g0;
 g1::usage =
     "test.";
 
+h0::usage =
+    "test.";
+
 
 Begin["`Private`"];
 
@@ -78,6 +81,9 @@ g1[x_] :=
             ]
         ]
     ];
+
+
+h0 = 0;
 
 
 End[];

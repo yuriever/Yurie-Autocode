@@ -42,7 +42,7 @@ VerificationTest[
     ,
     Quiet[0]
     ,
-    {Yurie`Autocode`exportArgumentCompletion::hasOwnValues}
+    {Yurie`Autocode`exportArgumentCompletion::OwnValuePresent}
     ,
     TestID->"[4] exportArgumentCompletion.nb"
 ]
@@ -76,7 +76,7 @@ VerificationTest[
     ,
     Quiet["h" -> {}]
     ,
-    {Yurie`Autocode`exportArgumentCompletion::hasOwnValues,Yurie`Autocode`exportArgumentCompletion::noStringOptions}
+    {Yurie`Autocode`exportArgumentCompletion::OwnValuePresent,Yurie`Autocode`exportArgumentCompletion::NoStringKey}
     ,
     TestID->"[8] exportArgumentCompletion.nb"
 ]
@@ -84,7 +84,7 @@ VerificationTest[
 VerificationTest[
     Yurie`Autocode`exportArgumentCompletion`Private`getOptionCompletionData["k" -> {{"arg1", "arg2"}, 0}]
     ,
-    "k" -> {{"arg1", "arg2"}, 0, {"Test"}}
+    "k" -> {{"arg1", "arg2"}, 0}
     ,
     TestID->"[9] exportArgumentCompletion.nb"
 ]
