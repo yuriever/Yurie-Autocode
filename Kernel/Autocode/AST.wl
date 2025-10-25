@@ -53,7 +53,7 @@ ASTHierarchyPrint[ast_] :=
 
 
 ASTHierarchyKernel[ast_,depth_] :=
-    Module[ {name,children},
+    Module[{name,children},
         name = ast[[1]];
         children = ast[[2]];
         {

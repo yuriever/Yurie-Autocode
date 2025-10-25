@@ -74,7 +74,7 @@ screenVerbatimPattern[ast_] :=
 
 
 getSuspiciousSetFromAST[excludedSymbolList_List][ast_] :=
-    Module[ {astListOfScoping,astListWithoutScoping},
+    Module[{astListOfScoping,astListWithoutScoping},
         astListWithoutScoping =
             DeleteCases[getChildren@ast,patternOfScoping];
         astListOfScoping =
@@ -109,7 +109,7 @@ getSuspiciousSetKernel[excludedSymbolList_List][ast_] :=
 
 
 handleListSet[ast_] :=
-    If[ MatchQ[ast,patternOfSymbolList],
+    If[MatchQ[ast,patternOfSymbolList],
         Replace[ast,patternOfSymbolList2],
         (*Else*)
         {ToFullFormString[ast]}

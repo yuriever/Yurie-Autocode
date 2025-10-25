@@ -62,7 +62,7 @@ exportPublicSymbolUsage//Options = {
 
 
 exportPublicSymbolUsage[dir:_?DirectoryQ|{__?DirectoryQ},targetDir_?DirectoryQ,opts:OptionsPattern[]] :=
-    With[ {
+    With[{
             usage =
                 getUsageFromDirectory[
                     dir,
@@ -145,7 +145,7 @@ handleUpdatedUsage[file_,False][usageList_List] :=
 
 handleUpdatedUsage[file_,Automatic|"FindStringJoinThenAddNewline"][usageList_List] :=
     usageList//Query[All,
-        If[ StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
+        If[StringStartsQ[#Usage,"StringJoin[MessageName["~~#Symbol~~", \"usage\"]"~~___],
             <|#,"Usage"->templateUpdatedUsage[file,#Symbol]|>,
             (*Else*)
             #

@@ -59,7 +59,7 @@ exportArgumentCompletion[
     funDataList:{(_String|_Rule)...}:{},
     extraFunDataList:{___Rule}:{}
 ] :=
-    Module[ {filePath},
+    Module[{filePath},
         filePath =
             FileNameJoin@{targetDir,$argumentFileName};
         Put[
@@ -95,7 +95,7 @@ getOptionCompletionData[Verbatim[Rule][funName_,completionData_]] :=
 handleRepeatedOption[funName_,completionData_] :=
     completionData//Replace[#,{
         Verbatim[Rule][Verbatim[Blank][],Verbatim[Blank][]]:>
-            With[ {keyList = optionKeyList@funName},
+            With[{keyList = optionKeyList@funName},
                 Splice@ConstantArray[keyList,Length[keyList]]
             ],
         Verbatim[Rule][Verbatim[Blank][],times_Integer]:>
@@ -116,14 +116,14 @@ maxNumberOfNormalArgument[funName_String] :=
 
 
 checkOwnValues[funName_String] :=
-    If[ Quiet@OwnValues[funName]=!={},
+    If[Quiet@OwnValues[funName]=!={},
         Message[exportArgumentCompletion::OwnValuePresent,funName];
         funName
     ];
 
 
 getArgmentPatternFromDownValues[funName_String] :=
-    With[ {
+    With[{
             rule =
                 ToExpression[
                     funName,
@@ -136,7 +136,7 @@ getArgmentPatternFromDownValues[funName_String] :=
 
 
 getArgmentPatternFromSubValues[funName_String] :=
-    With[ {
+    With[{
             rule =
                 ToExpression[
                     funName,
@@ -165,10 +165,10 @@ maxArgument[list_List] :=
 
 
 optionKeyList[funName_String] :=
-    Module[ {keys},
+    Module[{keys},
         keys =
             ToExpression[funName,StandardForm,Function[Null,Options@Unevaluated[#],HoldFirst]]//Keys//Cases[_String];
-        If[ keys==={},
+        If[keys==={},
             Message[exportArgumentCompletion::NoStringKey,funName];
             Nothing,
             (*Else*)

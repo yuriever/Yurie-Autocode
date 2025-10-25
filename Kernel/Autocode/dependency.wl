@@ -127,7 +127,7 @@ dependencyGraph[
     ],
     opts:OptionsPattern[]
 ] :=
-    Module[ {maxDepth,relationList,coloredEdgeList},
+    Module[{maxDepth,relationList,coloredEdgeList},
         relationList =
             Hold[symbol]//getEdgeFromDefinition[OptionValue["HideSystemSymbol"],exclusionList,limit]//
                 ifDeleteSymbolOrEdgeWithoutDefinition[OptionValue["HideSymbolWithoutDefinition"]]//
@@ -152,7 +152,7 @@ dependencyGraph[
 
 
 getEdgeFromDefinition[ifHideSystemSymbol_,exclusionList_,limit_][heldSymbol_Hold] :=
-    Module[ {relationListAtLevelOne,relationList,relationWithDepthList},
+    Module[{relationListAtLevelOne,relationList,relationWithDepthList},
         relationListAtLevelOne =
             getRelationFromHeldSymbol[ifHideSystemSymbol,exclusionList][heldSymbol];
         WithCleanup[
@@ -175,7 +175,7 @@ getEdgeFromDefinition[ifHideSystemSymbol_,exclusionList_,limit_][heldSymbol_Hold
 
 
 getRelationFromRelation[ifHideSystemSymbol_,exclusionList_][relationList_List] :=
-    Module[ {newRelationList},
+    Module[{newRelationList},
         newRelationList =
             relationList//Map[getRelationFromHeldSymbol[ifHideSystemSymbol,exclusionList]@*Last]//Flatten//Complement[#,$symbolEdgeCache]&;
         $symbolEdgeCache =
@@ -194,7 +194,7 @@ getRelationFromHeldSymbol[ifHideSystemSymbol_,exclusionList_][Hold[Symbol[_]]] :
     {};
 
 getRelationFromHeldSymbol[ifHideSystemSymbol_,exclusionList_][heldSymbol_Hold] :=
-    Module[ {heldValues,heldSymbolList},
+    Module[{heldValues,heldSymbolList},
         Which[
             Context@@heldSymbol==="System`",
                 heldSymbolList = {},
@@ -231,7 +231,7 @@ symbolSelector[Symbol[sname_],_,_] :=
     False;
 
 symbolSelector[symbol_,True,exclusionList_] :=
-    With[ {context = Context@symbol},
+    With[{context = Context@symbol},
         context=!="System`"&&
             !StringContainsQ[context,exclusionList]
     ];

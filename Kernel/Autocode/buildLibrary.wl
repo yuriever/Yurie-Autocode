@@ -36,10 +36,10 @@ Begin["`Private`"];
 
 
 buildLibrary[dir_?DirectoryQ,targetDir_?DirectoryQ,libName_String] :=
-    Module[ {libPath,builtFile},
+    Module[{libPath,builtFile},
         libPath =
             FileNameJoin@{targetDir,libName<>"."<>Internal`DynamicLibraryExtension[]};
-        If[ FileExistsQ@libPath,
+        If[FileExistsQ@libPath,
             DeleteFile@libPath;
         ];
         builtFile = CreateLibrary[
@@ -48,7 +48,7 @@ buildLibrary[dir_?DirectoryQ,targetDir_?DirectoryQ,libName_String] :=
             "TargetDirectory"->targetDir,
             "CleanIntermediate"->True
         ];
-        If[ Not@FileExistsQ@builtFile,
+        If[Not@FileExistsQ@builtFile,
             Failure["BuildFailed",<|"MessageTemplate"->"The library is failed to build."|>],
             (*Else*)
             Success["BuildCompleted",<|"MessageTemplate"->"The library has been built successfully."|>]

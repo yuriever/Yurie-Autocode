@@ -35,7 +35,7 @@ f1//Attributes =
     {HoldAll};
 
 f1[x_] :=
-    Module[ {temp,temp2=1},
+    Module[{temp,temp2=1},
         temp = x;
         g1 = 1;
         temp2+temp
@@ -62,7 +62,7 @@ g0[_] :=
 
 
 g1[x_] :=
-    Module[ {temp},
+    Module[{temp},
         Module[{temp1},
             temp=x;
             temp1=temp;
@@ -71,7 +71,7 @@ g1[x_] :=
 
 
 g1[x_] :=
-    Module[ {temp},
+    Module[{temp},
         Module[{temp1},
             Module[{temp2},
                 temp=x;

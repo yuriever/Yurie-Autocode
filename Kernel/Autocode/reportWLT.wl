@@ -41,7 +41,7 @@ dirLevelP = Infinity|_Integer?Positive|{_Integer?Positive};
 
 
 reportWLT[dir:_?DirectoryQ|{__?DirectoryQ},level:dirLevelP:Infinity] :=
-    Module[ {report},
+    Module[{report},
         report =
             Block[{Print},
                 TestReport[

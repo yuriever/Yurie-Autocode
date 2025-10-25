@@ -74,9 +74,9 @@ convertSingleNotebookToWLT[pathLevelInTestID_][notebook_,targetDir_] :=
 
 
 getTestStringFromNotebook[pathLevelInTestID_][notebook_] :=
-    Module[ {notebookName},
+    Module[{notebookName},
         notebookName =
-            If[ IntegerQ[pathLevelInTestID]&&pathLevelInTestID>=1,
+            If[IntegerQ[pathLevelInTestID]&&pathLevelInTestID>=1,
                 FileNameTake[notebook,-pathLevelInTestID],
                 (*Else*)
                 Throw@Failure[
@@ -95,7 +95,7 @@ getTestStringFromNotebook[pathLevelInTestID_][notebook_] :=
 
 
 importCellListFromNotebook[notebook_] :=
-    Module[ {cellList,cellTypeList,boxList,exprList},
+    Module[{cellList,cellTypeList,boxList,exprList},
         cellList =
             NotebookImport[notebook,_->"Cell"];
         cellTypeList =
@@ -123,7 +123,7 @@ importCellListFromNotebook[notebook_] :=
 trimCellList[cellList_List] :=
     cellList//Query[Select[MatchQ[#Type,"Input"|"Code"|"Output"|"Message"]&]]//
         Query[All,
-            If[ #Type==="Code",
+            If[#Type==="Code",
                 <|#,"Type"->"Input"|>,
                 (*Else*)
                 #
@@ -134,12 +134,12 @@ trimCellList[cellList_List] :=
 (*group the cells by output cells.*)
 
 groupCellListByOutput[cellList_List] :=
-    Module[ {cellTypeList,positionList},
+    Module[{cellTypeList,positionList},
         cellTypeList =
             cellList//Query[All,#Type&];
         positionList =
             SequencePosition[cellTypeList,{"Output","Output"}][[All,1]]-1;
-        If[ positionList=!={},
+        If[positionList=!={},
             Throw@Failure[
                 "AdjacentOutput",
                 <|
@@ -163,9 +163,9 @@ groupedCellListToTestStringList[notebookName_][groupedCellList:{___List}] :=
 
 
 cellListToTestString[notebookName_][cellList_List,id_Integer] :=
-    Module[ {msgString},
+    Module[{msgString},
         msgString = getStringOf["Message",cellList];
-        If[ msgString==="{}",
+        If[msgString==="{}",
             templateOfTestString[{
                 getStringOf["Input",cellList],
                 getStringOf["Output",cellList],
@@ -211,7 +211,7 @@ indentNewline[missing_Missing] :=
 
 
 indentNewline2[str_String] :=
-    If[ StringContainsQ[str,"Null; "],
+    If[StringContainsQ[str,"Null; "],
         StringSplit[str,"Null; "]//StringReplace[#,StartOfString~~"("~~any__~~"); ":>any]&//StringRiffle[#,"\n    "]&,
         (*Else*)
         str
